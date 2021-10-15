@@ -1,19 +1,12 @@
 import React from 'react'
-import './App.css';
-import styled from 'styled-components';
+import Login from './components/Login.js';
 
 function App() {
   return (
     <div className="App">
-      <Header>Test</Header>
+      <Login />
     </div>
   );
 }
 
 export default App;
-
-const Header = styled.header `
-  width: 100%;
-  height: 50%;
-  background-color: red;
-`;
