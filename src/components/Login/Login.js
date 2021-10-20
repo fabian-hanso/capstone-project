@@ -3,7 +3,19 @@ import logo from './ebuddy-logo.svg';
 import grafik from './grafik-login.svg';
 import papierflieger from './Papierflieger.svg';
 
-function Login() {
+function Login({ onLogin }) {
+
+    const userData = [
+        {
+            username: 'FabianHanso',
+            password: '123',
+        },
+        {
+            username: 'JohnDoe',
+            password: '456',
+        }
+    ]
+
   return (
     <Wrapper>
         <TopWrapper>
@@ -11,16 +23,34 @@ function Login() {
             <LoginGrafik src={grafik} alt="Schulbücher" />
         </TopWrapper>
         <BottomWrapper>
-            <Form>
-                <InputField type="text" placeholder="Vorname" />
-                <InputField type="text" placeholder="Passwort" />
-                <InputButton type="submit">Anmelden</InputButton>
+            <Form onSubmit={FormSubmitHandler}>
+                <InputField type="text" placeholder="Vorname" required name="username"></InputField>
+                <InputField type="Password" placeholder="Passwort" required name="password"></InputField>
+                <InputButton>Anmelden</InputButton>
             </Form>
             <Copyright>©2021 Fabian Hanso</Copyright>
             <Papierflieger src={papierflieger} alt="Kleiner Papierflieger" />
         </BottomWrapper>
     </Wrapper>
   );
+
+    function FormSubmitHandler(event) {
+        event.preventDefault();
+        const form = event.target;
+        const { username, password } = form.elements;
+
+        for(let i = 0; i < userData.length; i++){
+            if(username.value === userData[i].username && password.value === userData[i].password) {
+                i = userData.length;
+                onLogin(username.value);
+            } else {
+                console.log('Fehler!')
+            }
+        }
+        // userData.some()
+        // userData.find()
+        form.reset();
+    }
 }
 
 export default Login;
@@ -32,7 +62,7 @@ const Wrapper = styled.div `
 
 const TopWrapper = styled.div `
     width: 100%;
-    height: 50vh;
+    height: 42vh;
     min-width: 100%;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
@@ -40,7 +70,7 @@ const TopWrapper = styled.div `
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 110px 20px 0px 20px;
+    padding: 50px 20px 0px 20px;
     position: relative;
 `;
 
@@ -49,15 +79,15 @@ const LoginLogo = styled.img `
 `;
 
 const LoginGrafik = styled.img `
-    width: 85%;
+    width: 75%;
     position: absolute;
-    bottom: -40px;
+    bottom: -35px;
 `;
 
 const BottomWrapper = styled.div `
     width: 100%;
     height: 50vh;
-    padding: 100px 20px 20px 20px;
+    padding: 90px 20px 20px 20px;
 `;
 
 const Form = styled.form `
@@ -90,8 +120,13 @@ const InputButton = styled.button `
     background-color: #3c8f7c;
     color: #fff;
     border-radius: 30px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     padding: 20px 20px;
+    transition: all .5s;
+
+    &:hover {
+        background-color: #184655;
+    }
 `;
 
 const Copyright = styled.div `
