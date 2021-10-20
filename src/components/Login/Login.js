@@ -9,22 +9,43 @@ function Login({ onLogin }) {
         {
             username: 'FabianHanso',
             password: '123',
+            firstname: 'Fabian',
         },
         {
             username: 'JohnDoe',
             password: '456',
-        }
+            firstname: 'John',
+        },
+        {
+            username: 'Username',
+            password: 'Password',
+            firstname: 'User',
+        },
+        {
+            username: 'JohnDoe',
+            password: '456',
+        },
+        {
+            username: 'FabianHanso',
+            password: '123',
+        },
+        {
+            username: 'JohnDoe',
+            password: '456',
+        },
     ]
 
   return (
     <Wrapper>
         <TopWrapper>
-            <LoginLogo src={logo} alt="Logo" />
-            <LoginGrafik src={grafik} alt="Schulbücher" />
+            <LoginLogo src={logo} alt="ebuddy Logo" />
+            <LoginGrafik src={grafik} alt="Grafik mit Schulbüchern" />
         </TopWrapper>
         <BottomWrapper>
-            <Form onSubmit={FormSubmitHandler}>
+            <Form onSubmit={formSubmitHandler}>
+                <Label htmlFor="username">Username</Label>
                 <InputField type="text" placeholder="Vorname" required name="username"></InputField>
+                <Label htmlFor="Password">Password</Label>
                 <InputField type="Password" placeholder="Passwort" required name="password"></InputField>
                 <InputButton>Anmelden</InputButton>
             </Form>
@@ -34,7 +55,7 @@ function Login({ onLogin }) {
     </Wrapper>
   );
 
-    function FormSubmitHandler(event) {
+    function formSubmitHandler(event) {
         event.preventDefault();
         const form = event.target;
         const { username, password } = form.elements;
@@ -54,6 +75,10 @@ function Login({ onLogin }) {
 }
 
 export default Login;
+
+const Label = styled.label `
+    display: none;
+`;
 
 const Wrapper = styled.div `
   width: 100%;
