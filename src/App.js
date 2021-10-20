@@ -18,7 +18,6 @@ function App() {
       {
       !isLoggedIn
       ? <Login onLogin={handleLogin}/>
-      // : <p>Herzlich willkommen, {activeUser}</p>
       : <Dashboard letActiveUser={activeUser}/>
       }
     </div>
