@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { Link } from "react-router-dom";
 import home from './Home.svg';
 import arrownext from './arrow_right.svg';
 import arrownextblue from './arrow_right_blue.svg';
@@ -25,22 +26,22 @@ function Dashboard({ letActiveUser, onOpenMenu }) {
                 <FullWidthLink>
                     <DashboardHeadline>Neue Nachrichten</DashboardHeadline>
                     <DashboardText>{newMessages ? "Du hast ungelesene Nachrichten in deinem Postfach!" : "Du hast keine ungelesene Nachrichten in deinem Postfach!"}</DashboardText>
-                    <CardNextButton href=""><img src={arrownext} alt="next"></img></CardNextButton>
+                    <Link to="/chat" className='Link'><img src={arrownext} alt="next"></img></Link>
                 </FullWidthLink>
                 <ChatLink>
                     <DashboardHeadline>Bücher</DashboardHeadline>
                     <DashboardText>Alle Bücher auf einen Blick.</DashboardText>
-                    <CardNextButton href=""><img src={arrownext} alt="next"></img></CardNextButton>
+                    <Link to="" className='Link'><img src={arrownext} alt="next"></img></Link>
                 </ChatLink>
                 <ChatLink>
                     <DashboardHeadline>Hausaufgaben</DashboardHeadline>
                     <DashboardText>Alle Aufgaben auf einen Blick.</DashboardText>
-                    <CardNextButton href=""><img src={arrownext} alt="next"></img></CardNextButton>
+                    <Link to="" className='Link'><img src={arrownext} alt="next"></img></Link>
                 </ChatLink>
                 <StundenLink>
                     <DashboardHeadline>Stundenplan</DashboardHeadline>
                     <DashboardText>In kürze kannst du hier alle Aktualisierungen des Stundenplans einsehen.</DashboardText>
-                    <CardNextButtonWhite href=""><img src={arrownextblue} alt="next"></img></CardNextButtonWhite>
+                    <Link to="" className='Link_white'><img src={arrownextblue} alt="next"></img></Link>
                 </StundenLink>
             </GridWrapper>
         </BodyWrapper>
@@ -133,28 +134,6 @@ const StundenLink = styled.div `
     flex-direction: column;
     justify-content: space-between;
     color: #fff;
-`;
-
-const CardNextButton = styled.a `
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #3c8f7c;
-    align-self: flex-end;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-const CardNextButtonWhite = styled.a `
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    align-self: flex-end;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `;
 
 const DashboardHeadline = styled.h3 `
