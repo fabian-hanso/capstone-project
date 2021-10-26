@@ -3,21 +3,39 @@ import { Link } from "react-router-dom";
 import home from './Home.svg';
 import arrownext from './arrow_right.svg';
 import arrownextblue from './arrow_right_blue.svg';
+import close from './close_white_24dp.svg';
 import { useState } from 'react';
 
 function Dashboard({ letActiveUser, onOpenMenu }) {
 
     const [Greeting, setGreeting] = useState(false)
     const [newMessages, setNewMessages] = useState(false)
+    const [menuIsOpen, setMenuIsOpen] = useState(false)
 
     function openMenuHandler() {
-        // Functionality goes gere!
+        setMenuIsOpen(!menuIsOpen);
     }
 
   return (
     <Wrapper>
+        <MenuBackground menuIsOpen={menuIsOpen}>
+        </MenuBackground>
+        <OffCanvas menuIsOpen={menuIsOpen}>
+            <HeaderWrapperCanvas>
+                <MenuButton onClick={openMenuHandler}><img src={close} alt="Close Menu" /></MenuButton>
+            </HeaderWrapperCanvas>
+            <BodyWrapper>
+                <BigHeadlineWhite>Wo darf's hingehen,<br/><span>{letActiveUser}?</span></BigHeadlineWhite>
+                <LinkArea>
+                    <CanvasLinkColor to="/tasks">Hausaufgaben</CanvasLinkColor>
+                    <CanvasLinkColor to="/plan">Stundenplan</CanvasLinkColor>
+                    <CanvasLinkColor to="/inbox">Postfach</CanvasLinkColor>
+                    <CanvasLinkColor to="/books">Bücher</CanvasLinkColor>
+                </LinkArea>
+            </BodyWrapper>
+        </OffCanvas>
         <HeaderWrapper>
-            <MenuButton onClick={openMenuHandler}><img src={home} alt="Menu" /></MenuButton>
+            <MenuButton onClick={openMenuHandler}><img src={home} alt="Open Menu" /></MenuButton>
         </HeaderWrapper>
         <BodyWrapper>
             <BigHeadline>{Greeting ? "Guten Abend, " : "Guten Morgen, " }<br/><span>{letActiveUser}!</span></BigHeadline>
@@ -26,22 +44,22 @@ function Dashboard({ letActiveUser, onOpenMenu }) {
                 <FullWidthLink>
                     <DashboardHeadline>Neue Nachrichten</DashboardHeadline>
                     <DashboardText>{newMessages ? "Du hast ungelesene Nachrichten in deinem Postfach!" : "Du hast keine ungelesene Nachrichten in deinem Postfach!"}</DashboardText>
-                    <Link to="/chat" className='Link'><img src={arrownext} alt="next"></img></Link>
+                    <Link to="/inbox" className='Link'><img src={arrownext} alt="next"></img></Link>
                 </FullWidthLink>
                 <ChatLink>
                     <DashboardHeadline>Bücher</DashboardHeadline>
                     <DashboardText>Alle Bücher auf einen Blick.</DashboardText>
-                    <Link to="" className='Link'><img src={arrownext} alt="next"></img></Link>
+                    <Link to="/books" className='Link'><img src={arrownext} alt="next"></img></Link>
                 </ChatLink>
                 <ChatLink>
                     <DashboardHeadline>Hausaufgaben</DashboardHeadline>
                     <DashboardText>Alle Aufgaben auf einen Blick.</DashboardText>
-                    <Link to="" className='Link'><img src={arrownext} alt="next"></img></Link>
+                    <Link to="/tasks" className='Link'><img src={arrownext} alt="next"></img></Link>
                 </ChatLink>
                 <StundenLink>
                     <DashboardHeadline>Stundenplan</DashboardHeadline>
                     <DashboardText>In kürze kannst du hier alle Aktualisierungen des Stundenplans einsehen.</DashboardText>
-                    <Link to="" className='Link_white'><img src={arrownextblue} alt="next"></img></Link>
+                    <Link to="/plan" className='Link_white'><img src={arrownextblue} alt="next"></img></Link>
                 </StundenLink>
             </GridWrapper>
         </BodyWrapper>
@@ -50,6 +68,31 @@ function Dashboard({ letActiveUser, onOpenMenu }) {
 }
 
 export default Dashboard;
+
+const CanvasLinkColor = styled(Link) `
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 5px 0px;
+`;
+
+const MenuBackground = styled.div `
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, .6);
+    position: fixed;
+    display: ${({menuIsOpen}) => menuIsOpen ? 'block' : 'none'};
+`;
+
+const OffCanvas = styled.div `
+    width: 80%;
+    height: 100%;
+    position: fixed;
+    left: ${({menuIsOpen}) => menuIsOpen ? '0%' : '-100%'};
+    transition: all .5s;
+    display: block;
+    background-color: #3c8f7c;
+    box-shadow: 0px 0px 10px #3d3d3d;
+`;
 
 const Wrapper = styled.div `
     width: 100%;
@@ -60,6 +103,18 @@ const HeaderWrapper = styled.div `
     width: 100%;
     height: auto;
     background-color: #fff;
+    padding: 20px 20px;
+
+    img {
+        width: auto;
+        height: 40px;
+    }
+`;
+
+const HeaderWrapperCanvas = styled.div `
+    width: 100%;
+    height: auto;
+    background-color: none;
     padding: 20px 20px;
 
     img {
@@ -83,6 +138,25 @@ const BigHeadline = styled.h2 `
         font-weight: 600;
         color: #f47458;
     }
+`;
+
+const BigHeadlineWhite = styled.h2 `
+    font-size: 1.4rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+    color: #fff;
+
+    span {
+        font-weight: 600;
+        color: #fff;
+    }
+`;
+
+const LinkArea = styled.div `
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 `;
 
 const SmallHeadline = styled.h3 `

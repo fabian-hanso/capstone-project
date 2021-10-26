@@ -12,7 +12,7 @@ function Login({ onLogin }) {
             firstname: 'Fabian',
         },
         {
-            username: 'JohnDoe',
+            username: 'SaschaCollinet',
             password: '456',
             firstname: 'John',
         },
