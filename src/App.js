@@ -1,7 +1,9 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from './components/Login/Login.js';
 import { useState } from 'react';
 import Dashboard from './components/Dashboard/Dashboard.js';
+import Chat from './components/Chat/Chat';
 
 function App() {
 
@@ -15,11 +17,20 @@ function App() {
 
   return (
     <div className="App">
-      {
-      !isLoggedIn
-      ? <Login onLogin={handleLogin}/>
-      : <Dashboard letActiveUser={activeUser}/>
-      }
+      <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          {
+          !isLoggedIn
+          ? <Login onLogin={handleLogin}/>
+          : <Dashboard letActiveUser={activeUser}/> // Umbenennen
+          }
+        </Route>
+        <Route path="/chat">
+          <Chat activeUser={activeUser}/>
+        </Route>
+      </Switch>
+      </BrowserRouter>
     </div>
   );
 }
