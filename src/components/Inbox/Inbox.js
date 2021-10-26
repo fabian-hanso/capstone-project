@@ -59,7 +59,7 @@ function Inbox({ activeUser }) {
                         <LinkNextButton><img src={arrowNext} alt="Lene Frei"></img></LinkNextButton>
                     </StyledLink>
                 </Link>
-                <Link to='/inbox/Jana Bauer'>
+                <Link to='/inbox/JanaBauer'>
                     <StyledLink>
                         <ImageBadge><p>JB</p></ImageBadge>
                         <DisplayName>Jana Bauer</DisplayName>
