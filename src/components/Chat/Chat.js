@@ -1,80 +1,71 @@
 import styled from 'styled-components/macro';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Backwards from './backwards.svg';
 import Send from './Send.svg';
+import firebase from './firebase'
+import { useEffect , useState } from "react";
 import ChatStyles from './ChatStyles.css';
+import { onSnapshot, collection, addDoc, serverTimestamp } from '@firebase/firestore';
 
-function Chat({ activeUser }) {
+function Chat({ activeUser}) {
 
-    let messages = [
-        {
-            sentTo: 'SaschaCollinet',
-            sentFrom: 'FabianHanso',
-            body: 'Hey, Sascha! Hast du die Aufgabenstellung verstanden?',
-            Timestamp: '2021/10/21',
-        },
-        {
-            sentTo: 'FabianHanso',
-            sentFrom: 'SaschaCollinet',
-            body: 'Hallo Fabian! Leider nein & du?',
-            Timestamp: '2021/10/21',
-        },
-        {
-            sentTo: 'SaschaCollinet',
-            sentFrom: 'FabianHanso',
-            body: 'Ich habe mir alles durchgelesen & nehme nun das Merkblatt dazu.',
-            Timestamp: '2021/10/21',
-        },
-        {
-            sentTo: 'FabianHanso',
-            sentFrom: 'SaschaCollinet',
-            body: 'Hallo Fabian! Leider nein & du?',
-            Timestamp: '2021/10/21',
-        },
-        {
-            sentTo: 'SaschaCollinet',
-            sentFrom: 'FabianHanso',
-            body: 'Ich habe mir alles durchgelesen & nehme nun das Merkblatt dazu.',
-            Timestamp: '2021/10/21',
-        }
-    ]
+    const [messages, setMessages] = useState([]);
 
-    // function onSubmitMessage(event) {
-    //     event.preventDefault()
-    //     const Messageform = event.target
-    //     const message = Messageform.elements.message
-    //     console.log(message.value)
-    //     console.log({isActiveUser})
-    //     Messageform.reset()
-    // }
+    useEffect(
+        () => {
+        onSnapshot(collection(firebase, "chats"), (snapshot) => {
+            setMessages(snapshot.docs.map(doc => doc.data()));
+        });
+    })
+
+    const { chatPartner } = useParams();
+
+    function onSubmitMessage(event) {
+        event.preventDefault();
+        const Messageform = event.target;
+        const message = Messageform.elements.message;
+        const text = message.value;
+        const sentFrom = activeUser;
+        const timestamp = serverTimestamp();
+        const sentTo = chatPartner;
+        const collectionRef = collection(firebase, "chats");
+        const payload = { text, sentFrom, timestamp, sentTo }
+        addDoc(collectionRef, payload);
+        Messageform.reset();
+    };
 
   return (
     <Wrapper>
         <TopWrapper>
         <HeaderWrapper>
-            <Link to='/' className='Link_back'><img src={Backwards} alt="Menu" /></Link>
+            <Link to='/inbox' className='Link_back'><img src={Backwards} alt="Menu" /></Link>
         </HeaderWrapper>
-            <BigHeadline>{messages[0].sentTo}</BigHeadline>
+            <BigHeadline>{ chatPartner }</BigHeadline>
         </TopWrapper>
         <BodyWrapper>
             <div>
             {messages.map(message => (
-            <MessageWrapper className={message.sentFrom === activeUser ? 'sent_message' : 'received_message'}>{message.body}</MessageWrapper>
+            <MessageWrapper key={message.id} className={message.sentFrom === activeUser ? 'sent_message' : 'received_message'}>{message.text}</MessageWrapper>
             ))}
                 <div></div>
             </div>
         </BodyWrapper>
-        <InputElement>
-            <SubmitForm onSubmit={() => console.log('Test')}>
-                <input type="text" name="message" placeholder="Insert Text here"></input>
+        <ChatInputArea>
+            <SubmitForm onSubmit={onSubmitMessage}>
+                <InputLabel htmlFor="message">Username</InputLabel>
+                <input type="text" name="message" placeholder="Insert Text here" />
                 <ChatButton><img src={Send} alt="Send Message" /></ChatButton>
             </SubmitForm>
-        </InputElement>
+        </ChatInputArea>
     </Wrapper>
   );
 }
 
 export default Chat;
+
+const InputLabel = styled.label`
+    display: none;
+`;
 
 const TopWrapper = styled.div `
     width: 100%;
@@ -130,7 +121,7 @@ const BigHeadline = styled.h2 `
     padding: 0px 20px;
 `;
 
-const InputElement = styled.div `
+const ChatInputArea = styled.div `
     width: 100%;
     padding: 30px 20px 25px 20px;
     background-color: #184655;
