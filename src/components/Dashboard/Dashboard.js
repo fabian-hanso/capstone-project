@@ -5,6 +5,7 @@ import arrownext from './arrow_right.svg';
 import arrownextblue from './arrow_right_blue.svg';
 import close from './close_white_24dp.svg';
 import { useState } from 'react';
+import linkarrow from './navigate_next_white_24dp.svg';
 
 function Dashboard({ letActiveUser, onOpenMenu }) {
 
@@ -18,8 +19,7 @@ function Dashboard({ letActiveUser, onOpenMenu }) {
 
   return (
     <Wrapper>
-        <MenuBackground menuIsOpen={menuIsOpen}>
-        </MenuBackground>
+        <MenuBackground menuIsOpen={menuIsOpen} />
         <OffCanvas menuIsOpen={menuIsOpen}>
             <HeaderWrapperCanvas>
                 <MenuButton onClick={openMenuHandler}><img src={close} alt="Close Menu" /></MenuButton>
@@ -27,10 +27,10 @@ function Dashboard({ letActiveUser, onOpenMenu }) {
             <BodyWrapper>
                 <BigHeadlineWhite>Wo darf's hingehen,<br/><span>{letActiveUser}?</span></BigHeadlineWhite>
                 <LinkArea>
-                    <CanvasLinkColor to="/tasks">Hausaufgaben</CanvasLinkColor>
-                    <CanvasLinkColor to="/plan">Stundenplan</CanvasLinkColor>
-                    <CanvasLinkColor to="/inbox">Postfach</CanvasLinkColor>
-                    <CanvasLinkColor to="/books">Bücher</CanvasLinkColor>
+                    <CanvasLinkColor to="/tasks"><img src={linkarrow} alt="Arrow next" />Hausaufgaben</CanvasLinkColor>
+                    <CanvasLinkColor to="/plan"><img src={linkarrow} alt="Arrow next" />Stundenplan</CanvasLinkColor>
+                    <CanvasLinkColor to="/inbox"><img src={linkarrow} alt="Arrow next" />Postfach</CanvasLinkColor>
+                    <CanvasLinkColor to="/books"><img src={linkarrow} alt="Arrow next" />Bücher</CanvasLinkColor>
                 </LinkArea>
             </BodyWrapper>
         </OffCanvas>
@@ -73,6 +73,8 @@ const CanvasLinkColor = styled(Link) `
     color: #fff;
     font-size: 1.2rem;
     padding: 5px 0px;
+    display: flex;
+    align-items: center;
 `;
 
 const MenuBackground = styled.div `
@@ -81,6 +83,7 @@ const MenuBackground = styled.div `
     background-color: rgba(255, 255, 255, .6);
     position: fixed;
     display: ${({menuIsOpen}) => menuIsOpen ? 'block' : 'none'};
+    backdrop-filter: blur(3px);
 `;
 
 const OffCanvas = styled.div `
