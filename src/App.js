@@ -5,6 +5,8 @@ import Inbox from "./components/Inbox/Inbox.js";
 import { useState } from "react";
 import Dashboard from "./components/Dashboard/Dashboard.js";
 import Chat from "./components/Chat/Chat";
+import Book from "./components/books/books";
+import Subjects from "./components/Subjects/Subjects";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,11 +36,11 @@ function App() {
           <Route path="/inbox">
             <Inbox activeUser={activeUser} />
           </Route>
-          <Route path="/books">
-            <p>Books</p>
+          <Route name="books" path="/subjects/:bookname">
+            <Book />
           </Route>
-          <Route path="/tasks">
-            <p>Tasks</p>
+          <Route path="/subjects">
+            <Subjects />
           </Route>
           <Route path="/tasks">
             <p>plan</p>
