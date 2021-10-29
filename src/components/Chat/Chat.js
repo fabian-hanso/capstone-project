@@ -1,8 +1,9 @@
 import styled from "styled-components/macro";
+import { React, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import Backwards from "./backwards.svg";
-import Send from "./Send.svg";
-import firebase from "./firebase";
+import Send from "./email-fast-outline.svg";
+import firebase from "../firebase";
 import { useEffect, useState } from "react";
 import ChatStyles from "./ChatStyles.css";
 import {
@@ -19,6 +20,8 @@ function Chat({ activeUser }) {
   const [messages, setMessages] = useState([]);
   const { chatPartner } = useParams();
 
+  const scrollRef = useRef();
+
   useEffect(() => {
     const unsubscribe = onSnapshot(
       query(
@@ -27,7 +30,9 @@ function Chat({ activeUser }) {
         orderBy("timestamp", "asc")
       ),
       (snapshot) => {
-        setMessages(snapshot.docs.map((doc) => doc.data()));
+        setMessages(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
       }
     );
     return unsubscribe;
@@ -46,6 +51,7 @@ function Chat({ activeUser }) {
     const payload = { text, sentFrom, timestamp, sentTo, chatId };
     addDoc(collectionRef, payload);
     messageform.reset();
+    scrollRef.current.scrollIntoView({ behavior: "smooth" }, false);
   }
 
   return (
@@ -59,21 +65,19 @@ function Chat({ activeUser }) {
         <BigHeadline>{chatPartner}</BigHeadline>
       </TopWrapper>
       <BodyWrapper>
-        <div>
-          {messages.map((message) => (
-            <MessageWrapper
-              key={message.id}
-              className={
-                message.sentFrom === activeUser
-                  ? "sent_message"
-                  : "received_message"
-              }
-            >
-              {message.text}
-            </MessageWrapper>
-          ))}
-          <div></div>
-        </div>
+        {messages.map((message) => (
+          <MessageWrapper
+            key={message.id}
+            className={
+              message.sentFrom === activeUser
+                ? "sent_message"
+                : "received_message"
+            }
+          >
+            {message.text}
+          </MessageWrapper>
+        ))}
+        <div id="scrollView" ref={scrollRef}></div>
       </BodyWrapper>
       <ChatInputArea>
         <SubmitForm onSubmit={onSubmitMessage}>
@@ -188,8 +192,4 @@ const ChatButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  img {
-    transform: rotate(270deg);
-  }
 `;

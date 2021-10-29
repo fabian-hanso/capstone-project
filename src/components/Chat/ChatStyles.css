@@ -1,37 +1,51 @@
 .received_message {
-    background-color: #184655 !important;
-    margin-right: 30% !important;
+  background-color: #184655 !important;
+  margin-right: 30% !important;
 }
 
 .sent_message {
-    background-color: #dedede !important;
-    color: #3d3d3d !important;
-    margin-left: 30% !important;
+  background-color: #dedede !important;
+  color: #3d3d3d !important;
+  margin-left: 30% !important;
 }
 
+.true_task {
+  background-color: #3c8f7c !important;
+}
+
+.false_task {
+  background-color: #184655 !important;
+  color: #fff;
+}
+/* 
+#scrollView {
+  height: 110px;
+  width: 100%;
+} */
+
 .Link {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #3c8f7c;
-    align-self: flex-end;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #3c8f7c;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Link_white {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    align-self: flex-end;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Link_back {
-    all: unset;
-    cursor: pointer;
+  all: unset;
+  cursor: pointer;
 }

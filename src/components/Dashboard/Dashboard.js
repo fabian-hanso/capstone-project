@@ -6,14 +6,19 @@ import arrownextblue from "./arrow_right_blue.svg";
 import close from "./close_white_24dp.svg";
 import { useState } from "react";
 import linkarrow from "./navigate_next_white_24dp.svg";
+import LogoutImage from "./logout_white_24dp.svg";
 
-function Dashboard({ letActiveUser, onOpenMenu }) {
+function Dashboard({ letActiveUser, onHandleLogout }) {
   const [Greeting, setGreeting] = useState(false);
   const [newMessages, setNewMessages] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   function openMenuHandler() {
     setMenuIsOpen(!menuIsOpen);
+  }
+
+  function handleLogout() {
+    onHandleLogout();
   }
 
   return (
@@ -48,6 +53,10 @@ function Dashboard({ letActiveUser, onOpenMenu }) {
               <img src={linkarrow} alt="Arrow next" />
               Bücher
             </CanvasLinkColor>
+            <CanvasLinkColorLogout to="/" onClick={handleLogout}>
+              <img src={LogoutImage} alt="Arrow next" />
+              Logout
+            </CanvasLinkColorLogout>
           </LinkArea>
         </BodyWrapper>
       </OffCanvas>
@@ -109,6 +118,15 @@ export default Dashboard;
 
 const CanvasLinkColor = styled(Link)`
   color: #fff;
+  font-size: 1.2rem;
+  padding: 5px 0px;
+  display: flex;
+  align-items: center;
+`;
+
+const CanvasLinkColorLogout = styled(Link)`
+  color: #fff;
+  margin-top: 300px;
   font-size: 1.2rem;
   padding: 5px 0px;
   display: flex;
