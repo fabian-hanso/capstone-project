@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Login from "./components/Login/Login.js";
 import Inbox from "./components/Inbox/Inbox.js";
 import { useState } from "react";
@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard/Dashboard.js";
 import Chat from "./components/Chat/Chat";
 import Book from "./components/books/books";
 import Subjects from "./components/Subjects/Subjects";
+import Tasks from "./components/tasks/tasks";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,6 +16,10 @@ function App() {
   function handleLogin(username) {
     setIsLoggedIn(!isLoggedIn);
     setActiveUser(username);
+  }
+
+  function onHandleLogout() {
+    setIsLoggedIn(!isLoggedIn);
   }
 
   return (
@@ -26,7 +31,10 @@ function App() {
               !isLoggedIn ? (
                 <Login onLogin={handleLogin} />
               ) : (
-                <Dashboard letActiveUser={activeUser} />
+                <Dashboard
+                  letActiveUser={activeUser}
+                  onHandleLogout={onHandleLogout}
+                />
               ) // Umbenennen
             }
           </Route>
@@ -43,7 +51,7 @@ function App() {
             <Subjects />
           </Route>
           <Route path="/tasks">
-            <p>plan</p>
+            <Tasks activeUser={activeUser} />
           </Route>
         </Switch>
       </BrowserRouter>
