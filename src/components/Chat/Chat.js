@@ -68,11 +68,7 @@ function Chat({ activeUser }) {
         {messages.map((message) => (
           <MessageWrapper
             key={message.id}
-            className={
-              message.sentFrom === activeUser
-                ? "sent_message"
-                : "received_message"
-            }
+            ownMessage={message.sentFrom === activeUser}
           >
             {message.text}
           </MessageWrapper>
@@ -114,6 +110,17 @@ const MessageWrapper = styled.div`
   margin-bottom: 10px;
   line-height: 22px;
   color: #fff;
+  ${(ownMessage) =>
+    ownMessage
+      ? css`
+        background-color: #dedede ;
+        color: #3d3d3d;
+        margin-left: 30%;
+      `
+      : css` 
+        background-color: #184655;
+        margin-right: 30%;
+      `}
 `;
 
 const Wrapper = styled.div`
