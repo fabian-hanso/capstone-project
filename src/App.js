@@ -8,6 +8,7 @@ import Chat from "./components/Chat/Chat";
 import Book from "./components/books/books";
 import Subjects from "./components/Subjects/Subjects";
 import Tasks from "./components/tasks/tasks";
+import Plan from "./components/plan/Plan";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,6 +53,9 @@ function App() {
           </Route>
           <Route path="/tasks">
             <Tasks activeUser={activeUser} />
+          </Route>
+          <Route path="/plan">
+            <Plan />
           </Route>
         </Switch>
       </BrowserRouter>
