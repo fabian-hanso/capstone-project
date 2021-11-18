@@ -82,7 +82,12 @@ function Chat({ activeUser }) {
       <ChatInputArea>
         <SubmitForm onSubmit={onSubmitMessage}>
           <InputLabel htmlFor="message">Username</InputLabel>
-          <input type="text" name="message" placeholder="Insert Text here" />
+          <input
+            type="text"
+            name="message"
+            placeholder="Nachricht eingeben"
+            autocomplete="off"
+          />
           <ChatButton>
             <img src={Send} alt="Send Message" />
           </ChatButton>

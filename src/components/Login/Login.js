@@ -36,9 +36,10 @@ function Login({ onLogin }) {
           <Label htmlFor="username">Username</Label>
           <InputField
             type="text"
-            placeholder="Vorname"
+            placeholder="Nutzername"
             required
             name="username"
+            autocomplete="off"
           ></InputField>
           <Label htmlFor="Password">Password</Label>
           <InputField
@@ -46,6 +47,7 @@ function Login({ onLogin }) {
             placeholder="Passwort"
             required
             name="password"
+            autocomplete="off"
           ></InputField>
           <InputButton>Anmelden</InputButton>
         </Form>
