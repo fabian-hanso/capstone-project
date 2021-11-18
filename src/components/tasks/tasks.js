@@ -89,7 +89,12 @@ function Tasks({ activeUser }) {
       <TaskInputArea>
         <SubmitForm onSubmit={onSubmitTask}>
           <InputLabel htmlFor="task">Username</InputLabel>
-          <input type="text" name="task" placeholder="Aufgabe hinzufügen" />
+          <input
+            type="text"
+            name="task"
+            placeholder="Aufgabe hinzufügen"
+            autocomplete="off"
+          />
           <ChatButton>
             <img src={Send} alt="Send Message" />
           </ChatButton>
